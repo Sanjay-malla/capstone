@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bayesian Optimization Platform</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1120;color:#e5e7eb;font-family:Arial,sans-serif}
+.layout{display:flex;min-height:100vh}
+aside{width:245px;background:#111827;padding:25px 18px}
+aside h2{font-size:19px;color:#60a5fa}
+nav button{display:block;width:100%;padding:13px;margin:8px 0;background:transparent;border:0;color:#cbd5e1;text-align:left;cursor:pointer;border-radius:8px}
+nav button:hover,nav button.active{background:#263449;color:#60a5fa}
+main{padding:30px;flex:1;min-width:0}
+header{margin-bottom:28px}
+header h1{font-size:27px;margin-bottom:8px}
+.muted{color:#94a3b8}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:17px;margin:22px 0}
+.card{background:#172235;padding:20px;border:1px solid #28364b;border-radius:12px}
+.card h3{font-size:14px;color:#94a3b8}
+.metric{font-size:25px;color:#60a5fa;font-weight:bold}
+.panel{background:#172235;border:1px solid #28364b;padding:22px;border-radius:12px;margin:18px 0}
+input,select,textarea{width:100%;padding:12px;margin:10px 0;background:#0b1120;color:white;border:1px solid #475569;border-radius:7px}
+button.action{background:#2563eb;color:white;border:0;padding:12px 20px;border-radius:7px;cursor:pointer}
+button.action:hover{background:#1d4ed8}
+table{width:100%;border-collapse:collapse;margin-top:15px}
+td,th{padding:12px;border-bottom:1px solid #334155;text-align:left}
+section{display:none}
+section.active{display:block}
+canvas{max-height:330px}
+@media(max-width:700px){.layout{display:block}aside{width:100%}nav{display:flex;overflow:auto}nav button{min-width:130px}main{padding:17px}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside>
+<h2>BO Selection Platform</h2>
+<p class="muted">Research & Analytics</p>
+<nav>
+<button class="active" onclick="showPage('home',this)">Dashboard</button>
+<button onclick="showPage('analysis',this)">Problem Analysis</button>
+<button onclick="showPage('algorithms',this)">Algorithm Selection</button>
+<button onclick="showPage('benchmark',this)">Benchmark Validation</button>
+<button onclick="showPage('architecture',this)">Architecture</button>
+</nav>
+</aside>
+
+<main>
+<header>
+<h1>Bayesian Optimization Platform</h1>
+<p class="muted">Intelligent algorithm selection and benchmark analysis</p>
+</header>
+
+<section id="home" class="active">
+<div class="grid">
+<div class="card"><h3>Algorithms Supported</h3><div class="metric">05</div></div>
+<div class="card"><h3>Benchmark Functions</h3><div class="metric">05</div></div>
+<div class="card"><h3>Maximum Dimensions</h3><div class="metric">100</div></div>
+<div class="card"><h3>Analysis Modes</h3><div class="metric">02</div></div>
+</div>
+<div class="panel">
+<h2>Welcome to the Platform</h2>
+<p>Analyze optimization problems, explore Bayesian Optimization algorithms and compare benchmark performance.</p>
+<p class="muted">This GitHub Pages edition is a browser-based demonstration of the original Python project.</p>
+</div>
+<div class="panel">
+<h2>Platform Overview</h2>
+<canvas id="overviewChart"></canvas>
+</div>
+</section>
+
+<section id="analysis">
+<div class="panel">
+<h2>Real-World Problem Analysis</h2>
+<p class="muted">Describe your optimization problem.</p>
+<textarea id="problem" rows="6" placeholder="Example: I want to minimize defect rate by optimizing temperature from 180 to 250 degrees Celsius..."></textarea>
+<button class="action" onclick="analyze()">Analyze Problem</button>
+<div id="analysisResult"></div>
+</div>
+</section>
+
+<section id="algorithms">
+<div class="panel">
+<h2>Algorithm Selection Framework</h2>
+<table>
+<thead><tr><th>Algorithm</th><th>Best suited for</th><th>Complexity</th></tr></thead>
+<tbody>
+<tr><td>GP-EI</td><td>Low-dimensional expensive problems</td><td>High</td></tr>
+<tr><td>GP-UCB</td><td>Exploration-focused optimization</td><td>High</td></tr>
+<tr><td>REMBO</td><td>High-dimensional low effective dimension</td><td>Medium</td></tr>
+<tr><td>TuRBO</td><td>High-dimensional multimodal problems</td><td>High</td></tr>
+<tr><td>Random Search</td><td>Baseline comparison</td><td>Low</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section id="benchmark">
+<div class="panel">
+<h2>Benchmark Validation</h2>
+<label>Select benchmark function</label>
+<select id="function">
+<option>Sphere</option>
+<option>Rosenbrock</option>
+<option>Rastrigin</option>
+<option>Ackley</option>
+<option>Schwefel</option>
+</select>
+<label>Dimensions</label>
+<input type="number" id="dimensions" min="2" max="100" value="10">
+<label>Evaluation budget</label>
+<input type="number" id="budget" min="10" max="500" value="100">
+<button class="action" onclick="runBenchmark()">Generate demonstration</button>
+<p class="muted" id="benchmarkNote">Demonstration data only, not actual Python algorithm execution.</p>
+<canvas id="benchmarkChart"></canvas>
+</div>
+</section>
+
+<section id="architecture">
+<div class="panel">
+<h2>System Architecture</h2>
+<p>User Input → Problem Parser → Characterization → Recommendation Engine → Evaluation → Visualization</p>
+<h3>Core Modules</h3>
+<ul>
+<li>problem_parser.py</li>
+<li>problem_schema.py</li>
+<li>characterization.py</li>
+<li>recommendation.py</li>
+<li>algorithms.py</li>
+<li>benchmarks.py</li>
+<li>evaluation.py</li>
+<li>visualization.py</li>
+</ul>
+</div>
+</section>
+</main>
+</div>
+
+<script>
+function showPage(id,button){
+document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+button.classList.add('active');
+}
+
+function analyze(){
+let p=document.getElementById('problem').value.trim();
+let result=document.getElementById('analysisResult');
+if(!p){result.innerHTML='<p>Please enter a problem description.</p>';return;}
+let direction=/maximize|maximum|increase/i.test(p)?'Maximize':/minimize|minimum|reduce/i.test(p)?'Minimize':'Unknown';
+let vars=[...p.matchAll(/([a-zA-Z ]+?)\s+(?:from|between)\s+(-?\d+(?:\.\d+)?)\s+(?:to|and)\s+(-?\d+(?:\.\d+)?)/gi)];
+result.innerHTML='<h3>Analysis Summary</h3><p>Objective: '+direction+'</p><p>Extracted parameter ranges: '+vars.length+'</p><p>Observation noise: Unknown unless explicitly provided.</p><p>Recommendation: '+(vars.length>0?'GP-EI or TuRBO for further evaluation':'More problem details required')+'</p><p class="muted">This is a basic browser-side demonstration, not the original Python analysis engine.</p>';
+}
+
+let chart;
+function runBenchmark(){
+let n=Math.max(10,Math.min(500,Number(document.getElementById('budget').value)||100));
+let labels=Array.from({length:n},(_,i)=>i+1);
+let values=labels.map(i=>1/(1+i*.08)+Math.random()*.04);
+if(chart)chart.destroy();
+chart=new Chart(document.getElementById('benchmarkChart'),{
+type:'line',
+data:{labels,datasets:[{label:'Illustrative convergence',data:values,borderColor:'#60a5fa',pointRadius:0,tension:.2}]},
+options:{responsive:true,plugins:{legend:{labels:{color:'#e5e7eb'}}},scales:{x:{ticks:{color:'#94a3b8'}},y:{ticks:{color:'#94a3b8'}}}}
+});
+document.getElementById('benchmarkNote').textContent='Illustrative demonstration curve. No actual optimization was performed.';
+}
+
+new Chart(document.getElementById('overviewChart'),{
+type:'bar',
+data:{labels:['GP-EI','GP-UCB','REMBO','TuRBO','Random Search'],datasets:[{label:'Algorithm overview (illustrative)',data:[85,80,78,90,45],backgroundColor:'#3b82f6'}]},
+options:{responsive:true,plugins:{legend:{labels:{color:'#e5e7eb'}}},scales:{x:{ticks:{color:'#94a3b8'}},y:{ticks:{color:'#94a3b8'},beginAtZero:true,max:100}}}
+});
+</script>
+</body>
+</html>
